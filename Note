@@ -1,3 +1,17 @@
 GitHub URL:
 https://github.com/drdelozier/advanced_database/blob/master/sandbox/animals.db
 
+pythonanywhere.com
+example-julina.pythonanywhere.com
+
+#ngrok
+brew install ngrok
+# allow gto get public ip
+
+brek cask install ngrok
+#get auth token
+./ngrok http 8080
+
+
+http://8c2f5efe2d5b.ngrok.io
+127.0.0.1:4040/inspect/http

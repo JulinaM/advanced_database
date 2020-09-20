@@ -6,11 +6,11 @@ import sqlite3
 # are we executing at PythonAnywhere?
 ON_PYTHONANYWHERE = "PYTHONANYWHERE_DOMAIN" in os.environ
 
-assert ON_PYTHONANYWHERE == False
+# assert ON_PYTHONANYWHERE == False
 
 if ON_PYTHONANYWHERE:
     # from bottle import default_app
-    pass
+    from bottle import default_app
 else:
     from bottle import run, debug
 
@@ -48,7 +48,7 @@ def post_new_item():
 
 if ON_PYTHONANYWHERE:
     # on Pa, connect to the WSGI Server
-    # application = default_app()
+    application = default_app()
     pass
 else:
     # on the dev env

@@ -1,0 +1,11 @@
+import sqlite3
+conn = sqlite3.connect("todo.db")
+# conn.execute("CREATE TABLE todo(id INTEGER PRIMARY KEY, task char(100) NOT NULL, status bool NOT NULL)")
+conn.execute("INSERT INTO todo(task, status) VALUES ('Read A-byte-of-python to ', '0')")
+conn.execute("INSERT INTO todo(task, status) VALUES ('Visit th ePython ', '1')")
+conn.execute("INSERT INTO todo(task, status) VALUES ('Test various editors for and check the syntax highlighting', '1')")
+conn.execute("INSERT INTO todo(task, status) VALUES ('Chose your fav WSGI-Framewok', '0')")
+# conn.execute("INSERT INTO todo(task, status) VALUES ('REad A-bypte-of-python to ')")
+# conn.execute("INSERT INTO todo(task, status) VALUES ('REad A-bypte-of-python to ')")
+# conn.execute("INSERT INTO todo(task, status) VALUES ('REad A-bypte-of-python to ')")
+conn.commit()

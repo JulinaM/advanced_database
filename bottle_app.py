@@ -1,7 +1,8 @@
 import os
 from bottle import get, post, template, request, redirect
 
-import sqlite3
+from storage import get_items, get_item, update_status, create_item, update_item, delete_item
+
 
 # are we executing at PythonAnywhere?
 ON_PYTHONANYWHERE = "PYTHONANYWHERE_DOMAIN" in os.environ
@@ -17,20 +18,12 @@ else:
 
 @get('/')
 def get_show_list():
-    connection = sqlite3.connect("todo.db")
-    cursor = connection.cursor()
-    cursor.execute("select * from todo")
-    result = cursor.fetchall()
-    cursor.close()
+    result = get_items()
     return template("show_list", rows=result)
 
 @get('/set_status/<id:int>/<value:int>')
 def get_set_status(id, value):
-    connection = sqlite3.connect("todo.db")
-    cursor = connection.cursor()
-    cursor.execute("update todo set status=? where id=?", (value, id))
-    connection.commit()
-    cursor.close()
+    update_status(id, value)
     redirect("/")
 
 @get('/environ')
@@ -46,45 +39,27 @@ def get_new_item():
 @post("/new_item")
 def post_new_item():
     new_item = request.forms.get("new_item").strip()
-    connection = sqlite3.connect("todo.db")
-    connection.execute("INSERT INTO todo(task, status) VALUES (?, ?)", (new_item, 1))
-    connection.commit()
-    connection.close()
+    create_item(new_item,1)
     # return "The new item is [" + str(new_item) + "]..."
     redirect("/")
 
 @get("/update_item/<id:int>")
 def get_update_item(id):
-    connection = sqlite3.connect("todo.db")
-    cursor = connection.cursor()
-    cursor.execute("select * from todo where id=?", (id, ))
-    result = cursor.fetchall()
-    cursor.close()
-    return template("update_item", row=result[0])
+    result = get_item(id)
+    return template("update_item", row=result)
 
 @post("/update_item")
 def post_update_item():
     id = int(request.forms.get("id").strip())
     updated_item = request.forms.get("updated_item").strip()
-    connection = sqlite3.connect("todo.db")
-    cursor = connection.cursor()
-    cursor.execute("update todo set task=? where id=?", (updated_item, id))
-    connection.commit()
-    cursor.close()
+    update_item(id, updated_item)
     redirect("/")
 
 @get('/delete_item/<id:int>')
 def delete_item(id):
     print('We  want to delete item ', id)
-    connection = sqlite3.connect("todo.db")
-    cursor = connection.cursor()
-    cursor.execute("DELETE FROM todo WHERE id=?", (id,))
-    connection.commit()
-    cursor.close()
-    # return "The new item is [" + str(new_item) + "]..."
+    delete_item(id)
     redirect("/")
-
-    pass
 
 
 if ON_PYTHONANYWHERE:

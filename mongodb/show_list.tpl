@@ -28,6 +28,8 @@
     </tr>
 %end
 </table>
+<a href="/new_item">New TASK ... </a>
+<hr/>
 %include("mongodb/footer.tpl", session=session)
 </body>
 </html>

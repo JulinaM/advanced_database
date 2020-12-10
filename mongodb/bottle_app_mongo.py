@@ -69,7 +69,7 @@ def post_update_task():
 
 @get('/new_item')
 def get_new_item():
-    return template("new_item")
+    return template("mongodb/new_item")
 
 
 @post('/new_item')
